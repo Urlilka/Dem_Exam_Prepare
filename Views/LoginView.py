@@ -1,5 +1,4 @@
 from tkinter import ttk, Tk
-
 from Controllers.UserControllers import UserController
 
 
@@ -9,7 +8,7 @@ class LoginView(Tk):
     def __init__(self):
         super().__init__()
         self.title("Вход в систему")
-        self.geometry("500x500")
+        self.geometry("500x300")
 
         # Логин
         self.title_login = ttk.Label(self, text="Логин")
@@ -34,15 +33,19 @@ class LoginView(Tk):
         self.button.pack(anchor="center",expand=1)
         self.button["command"] = self.Button_Clicked
 
+        # Словарь подсчёта попыток входа
+        self.count_error = {}
+
     def Button_Clicked(self):
         """Метод события при нажатии на кнопку
         Args:
+            None
         Returns:
             message (str): Сообщение пользователю
         """
 
-        login = self.input_login.get() #Из поля в переменную
-        password = self.input_password.get() # из поля в переменную
+        login = self.input_login.get() #Из поля login в переменную
+        password = self.input_password.get() # из поля password в переменную
         user = UserController.auth(login,password)
         if login == "" or password == "":
             self.message["text"] = "Введите логин и пароль"
@@ -50,6 +53,18 @@ class LoginView(Tk):
             self.message["text"] = f" Здравствуйте {login}"
         else:
             self.message["text"] = f"Вы ввели неверный логин или пароль,\nпожалуйста проверьте введёные данные"
+
+        test_user = UserController.show(login)
+        # Проверка введённого логина
+        if test_user is not None:
+            if login not in self.count_error:
+                self.count_error[login] = 0 # добавить в словарь ключ-значение {user:0}
+            self.count_error[login] += 1
+            if self.count_error[login] >= 3:
+                UserController.update(test_user.id,ban = 1)
+            if user:
+                self.count_error[login] = 0
+        print(self.count_error)
 
 
 

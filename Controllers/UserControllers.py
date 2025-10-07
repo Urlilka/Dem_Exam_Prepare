@@ -11,7 +11,6 @@ class UserController:
     
     @classmethod
     def add(cls, login, password, role_id = 2):
-
         """
         Добавить пользователя в систему
         :param login: логин пользователя
@@ -19,20 +18,17 @@ class UserController:
         :param role_id: Роль пользователя по умолчанию - Пользователь
         :param return: ничего
         """
-
-        UserController.create(login=login,password=password,role_id=role_id)
+        Users.create(login=login,password=password,role_id=role_id)
     
     @classmethod
     def update(cls,id,**fields):
-
         """
         Обновление данных одного пользователя
         :param id: id пользователя
         :param fields: поле и новое значение
         :param return: ничего
         """
-
-        for keys,value in fields.items():
+        for key,value in fields.items():
             Users.update({key:value}).where(Users.id == id).execute()
     
     @classmethod
@@ -45,13 +41,14 @@ class UserController:
             True: Если в Таблице есть такой логин и  пароль
             False: Если в таблице нет такого логина или пароль не сооответствует этому логину
         """
-        # cls.user = Users.get_or_none(Users.login == login) # cls.Users присваевается объект из таблицы, если нет такого логина --- -None
         cls.user = cls.show(login)
         if cls.user is not None:
             if cls.user.password == password:
                 return True
             else:
                 return False
+        else:
+            return False
     
     @classmethod
     def show(cls,login):
@@ -59,7 +56,7 @@ class UserController:
         Args:
             login(str): Логин пользователя
         Returns:
-            Optinal[User]: Если в таблице есть такой пользрователь Возврощается объект описывающий пользователя
+            Optional[User]: Если в таблице есть такой пользрователь Возврощается объект описывающий пользователя
             False: Если в таблице нету такого пользователя Возврощается --- -None
         """
         return Users.get_or_none(Users.login == login)
@@ -67,9 +64,3 @@ class UserController:
 if __name__ == "__main__":
     for row in UserController.get():
         print(row.login)
-        
-    # print(UserController.auth(user,"123456"))
-
-    # print(
-    #     # UserController.show("admin").id
-    # )
