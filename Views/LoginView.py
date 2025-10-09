@@ -38,10 +38,11 @@ class LoginView(Tk):
 
     def Button_Clicked(self):
         """Метод события при нажатии на кнопку
-        Args:
-            None
+
         Returns:
-            message (str): Сообщение пользователю
+            message(str): Сообщение пользователю.
+            count_error(list): Подсчёт неверных попыток входа, далее изменение записи ban(boolean) в БД
+
         """
 
         login = self.input_login.get() #Из поля login в переменную
