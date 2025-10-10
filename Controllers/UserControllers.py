@@ -64,3 +64,7 @@ class UserController:
 if __name__ == "__main__":
     for row in UserController.get():
         print(row.login)
+
+    # UserController.update(1,login="User")
+
+    # UserController.add("admin", "123456", role_id=1)
