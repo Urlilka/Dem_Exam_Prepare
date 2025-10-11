@@ -25,7 +25,7 @@ class LoginView(Tk):
         self.input_password.pack(anchor="center")
 
         # Сообщение
-        self.message = ttk.Label(self, text="Вставить нужное")
+        self.message = ttk.Label(self, text="Введите логин и пароль")
         self.message.pack(anchor="center")
 
         # Кнопка
@@ -49,7 +49,7 @@ class LoginView(Tk):
         password = self.input_password.get() # из поля password в переменную
         user = UserController.auth(login,password)
         if login == "" or password == "":
-            self.message["text"] = "Введите логин и пароль"
+            self.message["text"] = "Логин и/или пароль не введены"
         elif user:
             self.message["text"] = f" Здравствуйте {login}"
         else:
