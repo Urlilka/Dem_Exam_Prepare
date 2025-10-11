@@ -6,3 +6,6 @@ venv
 /.idea
 .idea
 idea
+Connection/__pycache__
+Models/__pycache__
+Controllers/__pycache__
