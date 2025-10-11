@@ -3,6 +3,7 @@ from tkinter import *
 
 from Controllers.UserControllers import UserController
 
+from Views.EditView import EditView
 
 class AdminView(Tk):
     def __init__(self, user):
@@ -67,7 +68,8 @@ class AdminView(Tk):
         # Из строки взять логин пользователя
         self.user_date = self.users.item(self.item,"values")[0]
         # Передать логин в окно Изменения
-        print(self.user_date)
+        if self.user_date != "admin":
+            window = EditView(self.user_date)
 
     def table(self):
         # Очистка таблицы при запуске программы
