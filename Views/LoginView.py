@@ -1,6 +1,9 @@
 from tkinter import ttk, Tk
 from Controllers.UserControllers import UserController
 
+from Views.AdminView import AdminView
+from Views.NewPasswordView import NewPasswordView
+
 
 class LoginView(Tk):
     """ Класс для создания окна Авторизации
@@ -48,24 +51,60 @@ class LoginView(Tk):
         login = self.input_login.get() #Из поля login в переменную
         password = self.input_password.get() # из поля password в переменную
         user = UserController.auth(login,password)
+
         if login == "" or password == "":
             self.message["text"] = "Логин и/или пароль не введены"
-        elif user:
-            self.message["text"] = f" Здравствуйте {login}"
-        else:
-            self.message["text"] = f"Вы ввели неверный логин или пароль,\nпожалуйста проверьте введёные данные"
 
-        test_user = UserController.show(login)
-        # Проверка введённого логина
-        if test_user is not None:
-            if login not in self.count_error:
-                self.count_error[login] = 0 # добавить в словарь ключ-значение {user:0}
-            self.count_error[login] += 1
-            if self.count_error[login] >= 3:
-                UserController.update(test_user.id,ban = 1)
-            if user:
+        else:
+            if not user:
+                self.message["text"] = f"Вы ввели неверный логин или пароль,\nпожалуйста проверьте введёные данные"
+
+                if login not in self.count_error:
+                    self.count_error[login] = 0
+
+                self.count_error[login] = +1
+
+                if self.count_error[login] >= 3:
+                    UserController.update(user.id,ban = True)
+
+            elif user.date_auth is not None:
+                if (datetime.now() - user.date_auth).days >= 31:
+                    UserController.update(user.id, ban = True)
+                    self.message["text"] = f"Ваша учётная запись автоматически заблокированна.\nОбратитесь к администратору."
+            
+            elif user.ban:
+                self.message["text"] = f"Вы заблокированны. Обратитесь к администратору"
+            
+            elif user.first_auth:
                 self.count_error[login] = 0
-        print(self.count_error)
+                window = NewPasswordView(user)
+            
+            elif user.role_id.id == 1:
+                self.count_error[login] = 0
+                admin = UserController.show("admin")
+                window == AdminView(admin)
+                self.destroy()
+            
+            else:
+                self.message["text"] = f"Добро пожаловать"
+                self.count_error[login] = 0
+                UserController.update(user.id,date_auth = datetime.now().date())
+            
+
+        # test_user = UserController.show(login)
+
+        # # Проверка введённого логина
+        # if test_user is not None:
+
+        #     if login not in self.count_error:
+        #         self.count_error[login] = 0 # добавить в словарь ключ-значение {user:0}
+
+        #     self.count_error[login] += 1
+
+        #     if self.count_error[login] >= 3:
+        #         UserController.update(test_user.id,ban = 1)
+        #     if user:
+        #         self.count_error[login] = 0
 
 
 

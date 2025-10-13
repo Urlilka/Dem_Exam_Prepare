@@ -5,11 +5,11 @@ from Controllers.UserControllers import UserController
 
 
 class EditView(Tk):
-    def __init__(self, user):
+    def __init__(self, login):
         super().__init__()
-        self.user = user
-        self.title(f"Рабочий стол {user.login}")
-        self.geometry("300x300")
+        self.login = login
+        self.title(f"Рабочий стол {self.login}")
+        self.geometry("800x500")
 
         # Раздел добавления пользователей
         self.add_frame = ttk.Frame(
@@ -52,7 +52,28 @@ class EditView(Tk):
         self.button = ttk.Button(self.add_frame, text="Добавить пользователя")
         self.button.pack(anchor="center",expand=1)
         self.button["command"] = self.Button_Clicked
-    
+
+        if self.user.ban:
+            ban_massage = "Разблокировать"
+        else:
+            ban_massage = "Блокировать"
+
+        # Кнопка блокировки/разблокировки
+        self.button_ban = ttk.Button(self.add_frame, text="Изменить данные блокировки")
+        self.button_ban.pack(anchor="center")
+
+        # Кнопка
+        self.button = ttk.Button(self.add_frame, text="Сброс даты")
+        self.button.pack(anchor="center",expand=1)
+        self.button["command"] = self.Button_Undate
+
+
+    def button_ban(self):
+        UserController.update(self.user_id,ban = not self.user_ban)
+
+    def Button_Undate(self):
+        UserController.update(self.user_id, date_auth = None)
+
     def Button_Clicked(self):
         login = self.input_login.get()
         password = self.input_password.get()

@@ -44,7 +44,7 @@ class UserController:
         cls.user = cls.show(login)
         if cls.user is not None:
             if cls.user.password == password:
-                return True
+                return cls.user
             else:
                 return False
         else:
