@@ -16,6 +16,7 @@ class EditView(Tk):
             self,
             borderwidth=1,
             relief= SOLID,
+            height=300,
             padding=[8,10]
         )
         self.add_frame.pack(
@@ -24,6 +25,9 @@ class EditView(Tk):
             padx=10,
             pady=10
         )
+
+        self.add_frame.pack_propagate(0)
+
         self.add_title = ttk.Label(
             self.add_frame, #отображение внутри фрейма add_frame
             text="Добавление новых пользователей"
@@ -58,9 +62,9 @@ class EditView(Tk):
         # else:
         #     self.ban_massage = "Блокировать"
 
-        # Сообщение бан кнопки
-        self.ban_message = ttk.Label(self.add_frame, text="")
-        self.ban_message.pack(anchor="center")
+        # # Сообщение бан кнопки
+        # self.ban_message = ttk.Label(self.add_frame, text="")
+        # self.ban_message.pack(anchor="center")
 
         # Кнопка блокировки/разблокировки
         self.button_ban = ttk.Button(self.add_frame, text="Изменить данные блокировки")
@@ -68,9 +72,9 @@ class EditView(Tk):
         self.button_ban["command"] = self.button_Ban
 
 
-        # Кнопка
+        # Кнопка сброса даты
         self.button_undate = ttk.Button(self.add_frame, text="Сброс даты")
-        self.button_undate.pack(anchor="center")
+        self.button_undate.pack(anchor="center",expand=1)
         self.button_undate["command"] = self.Button_Undate
 
 

@@ -18,6 +18,7 @@ class AdminView(Tk):
             self,
             borderwidth=1,
             relief= SOLID,
+            height=200,
             padding=[8,10]
         )
         self.add_frame.pack(
@@ -26,6 +27,9 @@ class AdminView(Tk):
             padx=10,
             pady=10
         )
+
+        self.add_frame.pack_propagate(0)
+
         self.add_title = ttk.Label(
             self.add_frame, #отображение внутри фрейма add_frame
             text="Добавление новых пользователей"
