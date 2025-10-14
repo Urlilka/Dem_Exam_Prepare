@@ -63,15 +63,20 @@ class AdminView(Tk):
         self.table()
         self.users.bind("<<TreeviewSelect>>",self.item_selected)
 
+        # Кнопка обновить
+        self.button_update = ttk.Button(self, text="Обновить данные")
+        self.button_update["command"] = self.table
+        self.button_update.pack(anchor="center", expand=1)
+
 
     def item_selected(self, event):
         # Получить строку
         self.item = self.users.selection()[0]
         # Из строки взять логин пользователя
-        self.user_date = self.users.item(self.item,"values")[0]
+        self.user_data = self.users.item(self.item,"values")[0]
         # Передать логин в окно Изменения
-        if self.user_date != "admin":
-            window = EditView(self.user_date)
+        if self.user_data != "admin":
+            window = EditView(self.user_data)
 
     def table(self):
         # Очистка таблицы при запуске программы

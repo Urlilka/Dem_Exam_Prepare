@@ -7,9 +7,9 @@ from Controllers.UserControllers import UserController
 class EditView(Tk):
     def __init__(self, login):
         super().__init__()
-        self.login = login
-        self.title(f"Рабочий стол {self.login}")
-        self.geometry("800x500")
+        self.user = UserController.show(login)
+        self.title(f"Рабочий стол {login}")
+        self.geometry("500x500")
 
         # Раздел добавления пользователей
         self.add_frame = ttk.Frame(
@@ -46,33 +46,39 @@ class EditView(Tk):
 
         # Сообщение
         self.message = ttk.Label(self.add_frame, text="Введите логин и пароль")
-        self.message.pack(anchor="center")
+        self.message.pack(anchor="center",expand=1)
 
         # Кнопка
-        self.button = ttk.Button(self.add_frame, text="Добавить пользователя")
+        self.button = ttk.Button(self.add_frame, text="изменить данные пользователя")
         self.button.pack(anchor="center",expand=1)
         self.button["command"] = self.Button_Clicked
 
-        if self.user.ban:
-            ban_massage = "Разблокировать"
-        else:
-            ban_massage = "Блокировать"
+        # if self.user.ban:
+        #     self.ban_massage = "Разблокировать"
+        # else:
+        #     self.ban_massage = "Блокировать"
+
+        # Сообщение бан кнопки
+        self.ban_message = ttk.Label(self.add_frame, text="")
+        self.ban_message.pack(anchor="center")
 
         # Кнопка блокировки/разблокировки
         self.button_ban = ttk.Button(self.add_frame, text="Изменить данные блокировки")
-        self.button_ban.pack(anchor="center")
+        self.button_ban.pack(anchor="center",expand=1)
+        self.button_ban["command"] = self.button_Ban
+
 
         # Кнопка
-        self.button = ttk.Button(self.add_frame, text="Сброс даты")
-        self.button.pack(anchor="center",expand=1)
-        self.button["command"] = self.Button_Undate
+        self.button_undate = ttk.Button(self.add_frame, text="Сброс даты")
+        self.button_undate.pack(anchor="center")
+        self.button_undate["command"] = self.Button_Undate
 
 
-    def button_ban(self):
-        UserController.update(self.user_id,ban = not self.user_ban)
+    def button_Ban(self):
+        UserController.update(self.user.id,ban = not self.user.ban)
 
     def Button_Undate(self):
-        UserController.update(self.user_id, date_auth = None)
+        UserController.update(self.user.id, date_auth = None)
 
     def Button_Clicked(self):
         login = self.input_login.get()
@@ -82,4 +88,8 @@ class EditView(Tk):
             UserController.update(self.user.id,login=login)
         if password != "":
             UserController.update(self.user.id,password=password)
+
+if __name__ == "__main__":
+    window = EditView("admin")
+    window.mainloop()
         

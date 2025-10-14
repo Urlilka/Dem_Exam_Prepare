@@ -38,3 +38,8 @@ class NewPasswordView(Tk):
 
     def Button_Clicked(self):
         pass
+
+
+if __name__ == "__main__":
+    window = NewPasswordView()
+    window.mainloop()
