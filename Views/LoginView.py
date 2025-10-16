@@ -77,7 +77,8 @@ class LoginView(Tk):
             
             elif user.first_auth:
                 self.count_error[login] = 0
-                window = NewPasswordView(user)
+                print(user.login)
+                window = NewPasswordView(user.login)
             
             elif user.role_id.id == 1:
                 self.count_error[login] = 0

@@ -10,7 +10,7 @@ class AdminView(Tk):
     def __init__(self, user):
         super().__init__()
         self.user = user
-        self.title(f"Рабочий стол {user.login}")
+        self.title(f"Рабочий стол: {user.login}")
         self.geometry("800x500")
 
         # Раздел добавления пользователей

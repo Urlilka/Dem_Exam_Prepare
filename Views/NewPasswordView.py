@@ -1,10 +1,13 @@
 from tkinter import ttk, Tk
 from tkinter import *
 
+from Controllers.UserControllers import UserController
+
 class NewPasswordView(Tk):
-    def __init__(self):
+    def __init__(self, login):
         super().__init__()
-        self.title("Смена пароля")
+        self.user = UserController.show(login)
+        self.title(f"Смена пароля: {login}")
         self.geometry("500x200")
 
 
@@ -41,5 +44,5 @@ class NewPasswordView(Tk):
 
 
 if __name__ == "__main__":
-    window = NewPasswordView()
+    window = NewPasswordView("test")
     window.mainloop()

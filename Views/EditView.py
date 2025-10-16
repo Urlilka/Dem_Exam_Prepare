@@ -8,7 +8,7 @@ class EditView(Tk):
     def __init__(self, login):
         super().__init__()
         self.user = UserController.show(login)
-        self.title(f"Рабочий стол {login}")
+        self.title(f"Рабочий стол: {login}")
         self.geometry("500x500")
 
         # Раздел добавления пользователей
@@ -16,7 +16,7 @@ class EditView(Tk):
             self,
             borderwidth=1,
             relief= SOLID,
-            height=300,
+            height=450,
             padding=[8,10]
         )
         self.add_frame.pack(
@@ -57,29 +57,36 @@ class EditView(Tk):
         self.button.pack(anchor="center",expand=1)
         self.button["command"] = self.Button_Clicked
 
-        # if self.user.ban:
-        #     self.ban_massage = "Разблокировать"
-        # else:
-        #     self.ban_massage = "Блокировать"
-
-        # # Сообщение бан кнопки
-        # self.ban_message = ttk.Label(self.add_frame, text="")
-        # self.ban_message.pack(anchor="center")
+        
 
         # Кнопка блокировки/разблокировки
         self.button_ban = ttk.Button(self.add_frame, text="Изменить данные блокировки")
-        self.button_ban.pack(anchor="center",expand=1)
-        self.button_ban["command"] = self.button_Ban
-
+        self.button_ban.pack(anchor="center")
+        self.button_ban["command"] = self.Button_Ban
+            
+        # Сообщение бан кнопки
+        if self.user.ban:
+            self.ban_message = ttk.Label(self.add_frame, text="Блокировать")
+        else:
+            self.ban_message = ttk.Label(self.add_frame, text="Разблокировать")
+        self.ban_message.pack(anchor="center")
 
         # Кнопка сброса даты
         self.button_undate = ttk.Button(self.add_frame, text="Сброс даты")
         self.button_undate.pack(anchor="center",expand=1)
         self.button_undate["command"] = self.Button_Undate
 
+        # Кнопка выхода
+        self.button_exit = ttk.Button(self.add_frame, text="Выход")
+        self.button_exit.pack(anchor="center",expand=1)
+        self.button_exit["command"] = self.Button_Exit
+    
+    def Button_Exit(self):
+        self.destroy()
 
-    def button_Ban(self):
+    def Button_Ban(self):
         UserController.update(self.user.id,ban = not self.user.ban)
+        self.ban_message["text"] = "Изменено"
 
     def Button_Undate(self):
         UserController.update(self.user.id, date_auth = None)
