@@ -61,8 +61,8 @@ class LoginView(Tk):
 
                 if login not in self.count_error:
                     self.count_error[login] = 0
-
-                self.count_error[login] = +1
+                else:
+                    self.count_error[login] =+ 1
 
                 if self.count_error[login] >= 3:
                     UserController.update(user.id,ban = True)
@@ -71,7 +71,7 @@ class LoginView(Tk):
                 if (datetime.now() - user.date_auth).days >= 31:
                     UserController.update(user.id, ban = True)
                     self.message["text"] = f"Ваша учётная запись автоматически заблокированна.\nОбратитесь к администратору."
-            
+
             elif user.ban:
                 self.message["text"] = f"Вы заблокированны. Обратитесь к администратору"
             
@@ -82,7 +82,7 @@ class LoginView(Tk):
             elif user.role_id.id == 1:
                 self.count_error[login] = 0
                 admin = UserController.show("admin")
-                window == AdminView(admin)
+                window = AdminView(admin)
                 self.destroy()
             
             else:
