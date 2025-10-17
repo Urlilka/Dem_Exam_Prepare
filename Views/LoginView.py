@@ -4,6 +4,8 @@ from Controllers.UserControllers import UserController
 from Views.AdminView import AdminView
 from Views.NewPasswordView import NewPasswordView
 
+from datetime import datetime
+
 
 class LoginView(Tk):
     """ Класс для создания окна Авторизации
@@ -77,7 +79,6 @@ class LoginView(Tk):
             
             elif user.first_auth:
                 self.count_error[login] = 0
-                print(user.login)
                 window = NewPasswordView(user.login)
             
             elif user.role_id.id == 1:
