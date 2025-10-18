@@ -57,6 +57,8 @@ class NewPasswordView(Tk):
             self.message["text"] = "Одно или несколько полей пустые"
         elif old_pass !=  curr_login.password:
             self.message["text"] = "Старый пароль введён неверно"
+        elif old_pass == new_pass or old_pass == conf_new_pass:
+            self.message["text"] = "Новый пароль должен быть отличным от старого"
         elif new_pass == conf_new_pass:
             print(TRUE)
             self.message["text"] = "Пароль обновлён"
