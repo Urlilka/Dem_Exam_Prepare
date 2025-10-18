@@ -26,7 +26,7 @@ class LoginView(Tk):
         self.title_password = ttk.Label(self, text="Введите пароль")
         self.title_password.pack(anchor="center")
 
-        self.input_password = ttk.Entry(self)
+        self.input_password = ttk.Entry(self, show="*")
         self.input_password.pack(anchor="center")
 
         # Сообщение
