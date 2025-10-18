@@ -11,7 +11,7 @@ class NewPasswordView(Tk):
         super().__init__()
         self.user = UserController.show(login)
         self.title(f"Смена пароля: {self.user.login}")
-        self.geometry("500x200")
+        self.geometry("400x200")
 
 
         # Старый Пароль
@@ -29,7 +29,7 @@ class NewPasswordView(Tk):
         self.input_new_password.pack(anchor="center")
 
         # Подтвердить Новый Пароль
-        self.title_confirm_new_password = ttk.Label(self, text="Введите новый пароль")
+        self.title_confirm_new_password = ttk.Label(self, text="Введите новый пароль снова")
         self.title_confirm_new_password.pack(anchor="center")
         # Повторный ввод нового пароля
         self.input_confirm_new_password = ttk.Entry(self)
@@ -37,7 +37,7 @@ class NewPasswordView(Tk):
 
         # Сообщение
         self.message = ttk.Label(self, text="___")
-        self.message.pack(anchor="center")
+        self.message.pack(anchor="center", expand=1)
 
         # Кнопка
         self.button = ttk.Button(self, text="Изменить пароль")
@@ -60,12 +60,11 @@ class NewPasswordView(Tk):
         elif old_pass == new_pass or old_pass == conf_new_pass:
             self.message["text"] = "Новый пароль должен быть отличным от старого"
         elif new_pass == conf_new_pass:
-            print(TRUE)
             self.message["text"] = "Пароль обновлён"
             UserController.update(curr_login.id, password = new_pass, first_auth = 0)
             self.destroy()
         else:
-            self.message["text"] = "Новый пароль повторно введён неверно"
+            self.message["text"] = "Новый пароль не совпадает с введёным повторно"
 
 
 if __name__ == "__main__":
