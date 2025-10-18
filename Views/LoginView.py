@@ -42,12 +42,11 @@ class LoginView(Tk):
         self.count_error = {}
 
     def Button_Clicked(self):
-        """Метод события при нажатии на кнопку
+        """Метод события при нажатии на кнопку.\n\nВедёт подсчёт попыток входа, выводит сообщения в зависимости от ситуации\nи переходит в окна Создания нового пароля, админ окно, окно пользователя\nв зависимости от введённых данных.
 
         Returns:
             message(str): Сообщение пользователю.
             count_error(list): Подсчёт неверных попыток входа, далее изменение записи ban(boolean) в БД
-
         """
 
         login = self.input_login.get() #Из поля login в переменную
@@ -91,22 +90,6 @@ class LoginView(Tk):
                 self.message["text"] = f"Добро пожаловать"
                 self.count_error[login] = 0
                 UserController.update(user.id,date_auth = datetime.now().date())
-            
-
-        # test_user = UserController.show(login)
-
-        # # Проверка введённого логина
-        # if test_user is not None:
-
-        #     if login not in self.count_error:
-        #         self.count_error[login] = 0 # добавить в словарь ключ-значение {user:0}
-
-        #     self.count_error[login] += 1
-
-        #     if self.count_error[login] >= 3:
-        #         UserController.update(test_user.id,ban = 1)
-        #     if user:
-        #         self.count_error[login] = 0
 
 
 

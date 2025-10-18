@@ -5,6 +5,8 @@ from Controllers.UserControllers import UserController
 
 
 class EditView(Tk):
+    """Класс для создания окна изменения выбранного в "AdminView" пользователя.
+    """
     def __init__(self, login):
         super().__init__()
         self.user = UserController.show(login)
@@ -82,16 +84,24 @@ class EditView(Tk):
         self.button_exit["command"] = self.Button_Exit
     
     def Button_Exit(self):
+        """Метод события при нажатия на кнопку.\n\nЗакрывает окно.
+        """
         self.destroy()
 
     def Button_Ban(self):
+        """Метод события при нажатия на кнопку.\n\nИзменяет состояние "ban" пользователя. 
+        """
         UserController.update(self.user.id,ban = not self.user.ban)
         self.ban_message["text"] = "Изменено"
 
     def Button_Undate(self):
+        """Метод события при нажатия на кнопку.\n\nСбрасывает дату входа у пользователя
+        """
         UserController.update(self.user.id, date_auth = None)
 
     def Button_Clicked(self):
+        """Метод события при нажатия на кнопку.\n\nВ зависимости от заполненого поля -- изменяет "login" и/или "password" на введённое в поле значение.
+        """
         login = self.input_login.get()
         password = self.input_password.get()
 

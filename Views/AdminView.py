@@ -7,6 +7,8 @@ from Views.EditView import EditView
 
 
 class AdminView(Tk):
+    """Класс создания окна Администратора
+    """
     def __init__(self, user):
         super().__init__()
         self.user = user
@@ -74,6 +76,8 @@ class AdminView(Tk):
 
 
     def item_selected(self, event):
+        """Метод события при нажатия на строку таблицы.\n\nОпределяет нажатую строку, к какому пользователю она привязыванна и открывает "EditView" для изменения выбранного пользователя.\nИсключение -- Администратор
+        """
         # Получить строку
         self.item = self.users.selection()[0]
         # Из строки взять логин пользователя
@@ -83,6 +87,8 @@ class AdminView(Tk):
             window = EditView(self.user_data)
 
     def table(self):
+        """Метод ввода данных в таблицу.\n\nДобавляет данные пользователей в таблицу, а так же переименовывает значения колонок и строчек на более интуитивно понятные.
+        """
         # Очистка таблицы при запуске программы
         for item in self.users.get_children():
             self.users.delete(item)
@@ -125,6 +131,8 @@ class AdminView(Tk):
             self.users.insert("",END,values=user)
 
     def Button_Clicked(self):
+        """Метод события при нажатии на кнопку.\n\nОсновываясь на введённых данных создаёт нового пользователя. Так же ведёт проверку на заполненость данных,\nи выводит соответствующие сообщения.
+        """
         login = self.input_login.get()
         password = self.input_password.get()
         test_user = UserController.show(login)

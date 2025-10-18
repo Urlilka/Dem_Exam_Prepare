@@ -5,6 +5,8 @@ from Controllers.UserControllers import UserController
 
 
 class NewPasswordView(Tk):
+    """Класс для создания окна "создания новго пароля при первом входе пользователя"
+    """
     def __init__(self, login):
         super().__init__()
         self.user = UserController.show(login)
@@ -44,6 +46,8 @@ class NewPasswordView(Tk):
     
 
     def Button_Clicked(self):
+        """Метод события при нажатии на кнопку.\n\nСравнивает старый пароль с введёным старым, и новые пароли друг с другом. Далее меняет пароль на новый.
+        """
         curr_login = self.user
         old_pass = self.input_old_password.get()
         new_pass = self.input_new_password.get()
